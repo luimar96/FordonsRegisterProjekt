@@ -45,6 +45,11 @@ namespace VehicleRepository
             dataContext.SubmitChanges();
         }
 
+        public void CreateServices(IList<IService> services)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(string regNum)
         {
             var deleteVehicle = dataContext.Vehicles.Where(i => i.RegistrationNumber == regNum).FirstOrDefault();

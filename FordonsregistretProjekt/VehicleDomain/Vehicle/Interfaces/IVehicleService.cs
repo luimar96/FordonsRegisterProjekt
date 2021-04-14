@@ -10,5 +10,6 @@ namespace VehicleDomain.Vehicle.Interfaces
     public interface IVehicleService
     {
        float GetYearlyFeeByType(IVehicle vehicle);
+       void CreateServices(IList<IService> services);
     }
 }

@@ -51,10 +51,16 @@ namespace FordonsregistretProjekt.Controllers
            
             return Ok();
         }
+        [HttpPost]
+        [Route("api/createServices")]
+        public IHttpActionResult CreateServices(CreateServiceRequestDto requestDto)
+        {
+            return Ok();
+        }
 
         [HttpGet]
         [Route("api/getAllServices")]
-        public IHttpActionResult GetAllServices( )
+        public IHttpActionResult GetAllServices()
         {
             var response = new GetAllServicesDto();
             foreach (var service in serviceRepository.GetAllServices())
@@ -82,7 +88,7 @@ namespace FordonsregistretProjekt.Controllers
             return Ok();
         }
         [HttpGet]
-        [Route("api/searcheservice/{regNum}")]
+        [Route("api/searcheservice/{id}")]
         public IHttpActionResult SearchService(int id)
         {
             var service = serviceRepository.GetById(id);

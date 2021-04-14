@@ -108,7 +108,6 @@ namespace MvcClient.Controllers
             return View();
         }
 
-
         public ActionResult ViewServices()
         {
             var services = new List<ViewServicesModel>();
@@ -171,25 +170,58 @@ namespace MvcClient.Controllers
             return View();
         }
 
-        public ActionResult EditService()
+        public ActionResult ServiceDetails(int id)
+        {
+            
+            using(HttpClient client = new HttpClient())
+            {
+                var response = client.GetAsync(apiEndpoints.GetServiceId + id).Result;
+                if(response != null)
+                {
+                    var jsonString = response.Content.ReadAsStringAsync().Result;
+                    var serviceResponse = JsonConvert.DeserializeObject<ServicesDto>(jsonString);
+                    return View(serviceResponse);
+                }
+                
+            }
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult EditService(int id)
         {
 
-            ViewBag.Message = "Create service";
+            using (HttpClient client = new HttpClient())
+            {
+                var response = client.GetAsync(apiEndpoints.GetServiceId + id).Result;
+                if (response != null)
+                {
+                    var jsonString = response.Content.ReadAsStringAsync().Result;
+                    var serviceResponse = JsonConvert.DeserializeObject<UpdateServiceRequestDto>(jsonString);
+                    return View(serviceResponse);
+                }
 
-            return View();
+            }
+            return RedirectToAction("Index");
         }
+
+        [HttpPost]
         public ActionResult EditService(UpdateServiceListModel model)
         {
             if(ModelState.IsValid)
             {
-                var updateServiceRequest = new UpdateServiceRequestDto
+                using(HttpClient client = new HttpClient())
                 {
-                    Id = model.Id,
-                    Description = model.Description,
-                    ServiceDate = model.ServiceDate,
-
-                };
+                    var updateService = JsonConvert.SerializeObject(model);
+                    var httpContent = new StringContent(updateService, Encoding.UTF8, "application/json");
+                    var response = client.PutAsync(new Uri(apiEndpoints.UpdateService), httpContent).Result;
+                    if(response.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+               
             }
+          
             return View();
         }
     }

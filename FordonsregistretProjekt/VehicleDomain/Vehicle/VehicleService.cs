@@ -10,14 +10,21 @@ namespace VehicleDomain.Vehicle
 {
     public class VehicleService : IVehicleService
     {
+        public void CreateServices(IList<IService> services)
+        {
+           
+        }
 
         public float GetYearlyFeeByType(IVehicle vehicle)
         {
-           if(vehicle is LightWeightVehicle)
+            if (vehicle is LightWeightVehicle)
             {
                 return 1200;
             }
-            return 0;
+            else if (vehicle is MediumWeightVehicle)
+                return 1800;
+            else
+                return 4500;
         }
     }
 }

@@ -170,12 +170,16 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\ViewVehicles.cshtml" />
-    <Content Include="Views\Home\CreateVehicle.cshtml" />
     <Content Include="Views\Home\ViewServices.cshtml" />
     <Content Include="Views\Home\CreateService.cshtml" />
+    <Content Include="Views\Home\ServiceDetails.cshtml" />
+    <Content Include="Views\Home\EditService.cshtml" />
+    <Content Include="Views\Home\CreateVehicle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Home\Service\" />
+    <Folder Include="Views\Home\Vehicle\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

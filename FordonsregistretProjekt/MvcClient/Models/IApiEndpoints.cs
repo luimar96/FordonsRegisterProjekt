@@ -12,6 +12,8 @@ namespace MvcClient.Models
         string GetServices { get; }
         string CreateVehicle { get; }
         string GetVehicles { get; }
+        string UpdateService { get; }
+        string GetServiceId { get; }
     }
     public class LocalApiEndpoints : IApiEndpoints
     {
@@ -19,5 +21,7 @@ namespace MvcClient.Models
         public string GetVehicles => "https://localhost:44377/api/getvehicles";
         public string GetServices => "https://localhost:44377/api/getAllServices";
         public string CreateService => "https://localhost:44377/api/createService";
+        public string UpdateService => "https://localhost:44377/api/updateservice";
+        public string GetServiceId => "https://localhost:44377/api/searcheservice/";
     }
 }

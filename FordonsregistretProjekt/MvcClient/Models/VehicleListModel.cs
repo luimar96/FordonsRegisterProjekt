@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace MvcClient.Models
 {
     public class VehicleListModel
     {
-        [Display(Name  = "Register number")]
+        [Display(Name = "Register number")]
         [Required(ErrorMessage = "You need to fill a Register Number")]
         public string RegistrationNumber { get; set; }
 
@@ -24,6 +21,8 @@ namespace MvcClient.Models
         [Required(ErrorMessage = "You need to fill a Weight")]
         public float Weight { get; set; }
 
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "First time in trafic")]
         [Required(ErrorMessage = "You need to fill FirstTimeInTrafic")]
         public DateTime FirstTimeInTrafic { get; set; }

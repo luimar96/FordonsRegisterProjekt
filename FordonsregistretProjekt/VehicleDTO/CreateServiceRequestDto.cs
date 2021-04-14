@@ -13,4 +13,8 @@ namespace VehicleDTO
         public string Description { get; set; }
 
     }
+    public class CreateServicesRequestDto
+    {
+        public IList<CreateServiceRequestDto> CreateServices { get; set; } = new List<CreateServiceRequestDto>();
+    }
 }
