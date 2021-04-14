@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="VehicleDatabase" Class="AzureStorageDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=myazureserver1.database.windows.net;Initial Catalog=VehicleDatabase;User ID=luimar;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False" SettingsObjectName="VehicleRepository.Properties.Settings" SettingsPropertyName="VehicleDatabaseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Vehicle" Member="Vehicles">
+    <Type Name="Vehicle">
+      <Column Name="RegistrationNumber" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Model" Type="System.String" DbType="NChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Brand" Type="System.String" DbType="NChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Weight" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="FirsTimeInTrafic" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="VehicleStatus" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="YearlyFee" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="Vehicle_Service" Member="Services" ThisKey="RegistrationNumber" OtherKey="RegistrationNumber" Type="Service" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Service" Member="Services">
+    <Type Name="Service">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RegistrationNumber" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="ServiceDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IsCompleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Vehicle_Service" Member="Vehicle" ThisKey="RegistrationNumber" OtherKey="RegistrationNumber" Type="Vehicle" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

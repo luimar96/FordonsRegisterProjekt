@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="AzureStorage">
+  <DataContextMoniker Name="/AzureStorageDataContext" />
+  <nestedChildShapes>
+    <classShape Id="1f5f7e43-0bf9-4dbc-8d48-961e05e08af8" absoluteBounds="0.875, 2, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/AzureStorageDataContext/Vehicle" />
+      <nestedChildShapes>
+        <elementListCompartment Id="61a02b59-1619-4cce-a7cd-ec9cd2991a0b" absoluteBounds="0.89000000000000012, 2.46, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="39190a76-73bd-4f3b-917a-7b98785fdbe7" absoluteBounds="3.625, 2.75, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/AzureStorageDataContext/Service" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e315b00c-2139-41a7-a7b8-9c9223196636" absoluteBounds="3.64, 3.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.875 : 3.45274983723958); (3.625 : 3.45274983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/AzureStorageDataContext/Vehicle/Vehicle_Service" />
+      <nodes>
+        <classShapeMoniker Id="1f5f7e43-0bf9-4dbc-8d48-961e05e08af8" />
+        <classShapeMoniker Id="39190a76-73bd-4f3b-917a-7b98785fdbe7" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
