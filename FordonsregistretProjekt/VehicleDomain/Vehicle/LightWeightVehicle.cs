@@ -83,5 +83,17 @@ namespace VehicleDomain.Vehicle
                 this.yearlyFee = yearlyFee + 1200;
 
         }
+
+        public void Update(string registernumber, string model, string brand, float weight, DateTime firstTimeInTrafic, bool vehicleStatus, float yearlyFee)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update( bool vehicleStatus, bool IserviceBooked)
+        {           
+            this.vehicleStatus = vehicleStatus;
+            this.isServiceBooked = IsServiceBooked;
+           
+        }
     }
 }

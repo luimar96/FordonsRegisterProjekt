@@ -9,6 +9,13 @@
 <p>
     @Html.ActionLink("Create New", "CreateVehicle")
 </p>
+<p>
+    @using (Html.BeginForm("ViewVehicles", "Home", FormMethod.Get))
+    {
+    <b> Search Registration Number</b> <br />
+    @Html.TextBox("search")<input type="submit" value="Search" />
+    }
+</p>
 <table class="table">
     <tr>
         <th>
@@ -37,8 +44,18 @@
         </th>
         <th></th>
     </tr>
+@if (Model.Count() == 0)
+{
+    <tr>
+        <td>
+            colspan="8"> No vehicle match
+        </td>
+        </tr>}
+else
+{
 
-@foreach (var item in Model) {
+foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.RegistranionNumber)
@@ -65,11 +82,12 @@
             @Html.DisplayFor(modelItem => item.YearlyFee)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "EditVehicle", new { regNum=item.RegistranionNumber }) |
+            @Html.ActionLink("Details", "VehicleDetails", new {  regNum=item.RegistranionNumber  }) |
+            @Html.ActionLink("Delete", "DeleteVehicle", new { regNum = item.RegistranionNumber })
         </td>
     </tr>
+}
 }
 
 </table>

@@ -18,6 +18,7 @@ namespace VehicleDomain.Interfaces
         bool IsServiceBooked { get;  }
         IList<IService> ServiceHistory { get; }
         float YearlyFee { get; }
+        void Update(bool vehicleStatus, bool IsServiceBooked);
        
 
     }

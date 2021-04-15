@@ -30,11 +30,21 @@ namespace MvcClient.Controllers
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult SearchVehicle(string search)
         {
-            ViewBag.Message = "Your contact page.";
 
-            return View();
+            using (HttpClient client = new HttpClient())
+            {
+                var response = client.GetAsync(apiEndpoints.SearchVehicle + search).Result;
+                if (response != null)
+                {
+                    var jsonString = response.Content.ReadAsStringAsync().Result;
+                    var serviceResponse = JsonConvert.DeserializeObject<VehicleDto>(jsonString);
+                    return View(serviceResponse);
+                }
+
+            }
+            return RedirectToAction("Index");
         }
         public ActionResult ViewVehicles()
         {
@@ -70,6 +80,62 @@ namespace MvcClient.Controllers
             }
             return View("viewVehicles", vehicles);
         }
+
+        public ActionResult VehicleDetails(string regNum)
+        {
+           using(HttpClient client = new HttpClient())
+            {
+                var response = client.GetAsync(apiEndpoints.SearchVehicle + regNum).Result;
+                if (response != null)
+                {
+                    var jsonString = response.Content.ReadAsStringAsync().Result;
+                    var serviceResponse = JsonConvert.DeserializeObject<VehicleDto>(jsonString);
+                    return View(serviceResponse);
+                }
+
+            }
+            return RedirectToAction("Index");
+        }
+       
+        public ActionResult EditVehicle(string regNum)
+        {
+
+            using (HttpClient client = new HttpClient())
+            {
+                var response = client.GetAsync(apiEndpoints.SearchVehicle + regNum).Result;
+                if (response != null)
+                {
+                    var jsonString = response.Content.ReadAsStringAsync().Result;
+                    var serviceResponse = JsonConvert.DeserializeObject<UpdateVehicleRequestDto>(jsonString);
+                    return View(serviceResponse);
+                }
+
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult EditVehicle(UpdateVehicleModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    var updateService = JsonConvert.SerializeObject(model);
+                    var httpContent = new StringContent(updateService, Encoding.UTF8, "application/json");
+                    var response = client.PutAsync(new Uri(apiEndpoints.UpdateVehicle), httpContent).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+
+            }
+
+            return View();
+        }
+
         public ActionResult CreateVehicle()
         {
             ViewBag.Message = "Register Vehicle";
@@ -106,6 +172,22 @@ namespace MvcClient.Controllers
             }
             ViewBag.Message = "Register Vehicle";
             return View();
+        }
+
+        public ActionResult DeleteVehicle(string regNum)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                var response = client.DeleteAsync(apiEndpoints.DeletVehicle + regNum).Result;
+                if (response != null)
+                {
+                    var jsonString = response.Content.ReadAsStringAsync().Result;
+                    var serviceResponse = JsonConvert.DeserializeObject<VehicleDto>(jsonString);
+                    return View(serviceResponse);
+                }
+
+            }
+            return RedirectToAction("Index");
         }
 
         public ActionResult ViewServices()

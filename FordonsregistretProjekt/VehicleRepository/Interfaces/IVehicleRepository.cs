@@ -11,8 +11,9 @@ namespace VehicleRepository
     {
         void Create(IVehicle vehicle);
         IVehicle GetbyRegistration(string regnum);
+      
         IEnumerable<IVehicle> GetAllVehicles();
-        IVehicle update(IVehicle vehicle);
+        IVehicle UpdateVehicle(IVehicle vehicle);
         void Delete(string regNum);
     }
 }

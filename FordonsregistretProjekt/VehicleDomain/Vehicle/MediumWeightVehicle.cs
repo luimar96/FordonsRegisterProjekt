@@ -85,5 +85,12 @@ namespace VehicleDomain.Vehicle
             this.yearlyFee = yearlyFee + 1800;
 
         }
+
+        public void Update(bool vehicleStatus, bool IsServiceBooked)
+        {          
+           
+            this.vehicleStatus = vehicleStatus;
+            this.isServiceBooked = isServiceBooked;
+        }
     }
 }

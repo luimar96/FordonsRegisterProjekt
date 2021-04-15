@@ -49,11 +49,34 @@ namespace VehicleRepository
         {
             throw new NotImplementedException();
         }
+        
 
         public void Delete(string regNum)
         {
+            DeleteService(regNum);
             var deleteVehicle = dataContext.Vehicles.Where(i => i.RegistrationNumber == regNum).FirstOrDefault();
-            dataContext.Vehicles.DeleteOnSubmit(deleteVehicle);
+            if (deleteVehicle != null)
+            {
+                dataContext.Vehicles.DeleteOnSubmit(deleteVehicle);
+                dataContext.SubmitChanges();
+            }
+            
+           
+        }
+
+        public void DeleteService(string regNum)
+        {
+            IEnumerable<Service> services = dataContext.Services.Where(i => i.RegistrationNumber == regNum).ToList();
+           
+            dataContext.Services.DeleteAllOnSubmit(services);
+            dataContext.SubmitChanges();
+        }
+
+        public void DeleteService(int id)
+        {           
+            var deleteService = dataContext.Services.Where(i => i.Id == id).FirstOrDefault();
+
+            dataContext.Services.DeleteOnSubmit(deleteService);
             dataContext.SubmitChanges();
         }
 
@@ -111,16 +134,28 @@ namespace VehicleRepository
             return null;
         }
 
+        //public IVehicle GetVehicleById(int id)
+        //{
+        //    var vehicle = dataContext.Vehicles.Where(i => i.Id == id).FirstOrDefault();
+        //    if (vehicle != null)
+        //    {
+        //        var isServiceBooked = dataContext.Services.Where(i => i.Id == id).Any();
+
+        //        IVehicle domainVehicle = VehicleFactory.CreateVehicle(vehicle.RegistrationNumber, vehicle.Model, vehicle.Brand, (float)vehicle.Weight, Convert.ToDateTime(vehicle.FirsTimeInTrafic),
+        //                                                                Convert.ToBoolean(vehicle.VehicleStatus), (float)vehicle.YearlyFee, isServiceBooked);
+
+
+        //        return domainVehicle;
+        //    }
+        //    return null;
+        //}
+
         public float GetYearlyFeeByType(IVehicle vehicle)
         {
             throw new NotImplementedException();
         }
 
-        public IVehicle update(IVehicle vehicle)
-        {
-
-            throw new NotImplementedException();
-        }
+      
 
         public IService Update(IService service)
         {
@@ -134,6 +169,21 @@ namespace VehicleRepository
 
             }
             return service;
+        }
+
+        public IVehicle UpdateVehicle(IVehicle vehicle)
+        {
+            var selectVehicle  = dataContext.Vehicles.Where(i => i.RegistrationNumber == vehicle.RegistrationNumber).FirstOrDefault();
+            if(selectVehicle != null)
+            {
+                var isServiceBokked = dataContext.Services.Where(i => i.RegistrationNumber == vehicle.RegistrationNumber).Any();
+
+                selectVehicle.VehicleStatus = vehicle.VehicleStatus;
+                isServiceBokked = vehicle.IsServiceBooked;
+                dataContext.SubmitChanges();
+
+            }
+            return vehicle;
         }
     }
 }

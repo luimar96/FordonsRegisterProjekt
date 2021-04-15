@@ -94,6 +94,17 @@ namespace FordonsregistretProjekt.Controllers
             var service = serviceRepository.GetById(id);
             return Ok(service);
         }
+
+        [HttpPut]
+        [Route("api/updateVehicle")]
+        public IHttpActionResult UpdateVechile(UpdateVehicleRequestDto requestDto)
+        {
+            IVehicle vehicle = vehicleRepository.GetbyRegistration(requestDto.RegistrationNumber);
+            vehicle.Update(requestDto.VehicleStatus, requestDto.IsServiceBooked);
+            vehicleRepository.UpdateVehicle(vehicle);
+            return Ok();
+        }
+
         [HttpGet]
         [Route("api/searchvehicle/{regNum}")]
         public IHttpActionResult SearchVehicle(string regNum)
