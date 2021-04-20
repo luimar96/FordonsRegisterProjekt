@@ -10,10 +10,13 @@
     @Html.ActionLink("Create New", "CreateVehicle")
 </p>
 <p>
-    @using (Html.BeginForm("SearchVehicle", "Home", FormMethod.Get))
+    @using (Html.BeginForm("SearchVehiclee", "Home", FormMethod.Get))
     {
-    <b> Search Registration Number</b> <br />
-    @Html.TextBox("search")<input type="submit" value="Search" />
+        <b> Search Registration Number</b> <br />
+        @Html.TextBox("search")<input type="submit" value="Search" />
+       
+          
+        
     }
 </p>
 <table class="table">

@@ -3,6 +3,7 @@ using MvcClient.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Web.Mvc;
@@ -30,7 +31,7 @@ namespace MvcClient.Controllers
             return View();
         }
 
-        public ActionResult SearchVehicle(string search)
+        public ActionResult SearchVehiclee(string search)
         {
 
             using (HttpClient client = new HttpClient())
@@ -39,13 +40,20 @@ namespace MvcClient.Controllers
                 if (response != null)
                 {
                     var jsonString = response.Content.ReadAsStringAsync().Result;
-                    var serviceResponse = JsonConvert.DeserializeObject<VehicleDto>(jsonString);
+                    var serviceResponse = JsonConvert.DeserializeObject<VehicleDto>(jsonString);                     
+                       if(serviceResponse == null)
+                    {
+                        ViewBag.Message = "No vehicle found!";
+                    }
                     return View(serviceResponse);
                 }
 
             }
-            return RedirectToAction("Index");
+          
+            return RedirectToAction("viewVehicles");
         }
+       
+
         public ActionResult ViewVehicles()
         {
             var vehicles = new List<ViewVehicleModel>();

@@ -17,20 +17,28 @@ namespace VehicleRepository
         }
         public void Create(IVehicle vehicle)
         {
-            var newVehicle = new Vehicle()
+            var vehicleRegNumExist = dataContext.Vehicles.Where(i => i.RegistrationNumber == vehicle.RegistrationNumber).FirstOrDefault();
+            if (vehicleRegNumExist is null)
             {
-                RegistrationNumber = vehicle.RegistrationNumber,
-                Model = vehicle.Model,
-                Brand = vehicle.Brand,
-                FirsTimeInTrafic = vehicle.FirsTimeInTrafic,
-                Weight = vehicle.Weight,
-                VehicleStatus = vehicle.VehicleStatus,
-                YearlyFee = vehicle.YearlyFee,
+                var newVehicle = new Vehicle()
+                {
+                    RegistrationNumber = vehicle.RegistrationNumber,
+                    Model = vehicle.Model,
+                    Brand = vehicle.Brand,
+                    FirsTimeInTrafic = vehicle.FirsTimeInTrafic,
+                    Weight = vehicle.Weight,
+                    VehicleStatus = vehicle.VehicleStatus,
+                    YearlyFee = vehicle.YearlyFee,
 
 
-            };
-            dataContext.Vehicles.InsertOnSubmit(newVehicle);
-            dataContext.SubmitChanges();
+                };
+                dataContext.Vehicles.InsertOnSubmit(newVehicle);
+                dataContext.SubmitChanges();
+
+            }
+            else
+                throw new Exception("Vehicle Exist alreaday");
+
         }
 
         public void Create(IService service)
@@ -49,7 +57,7 @@ namespace VehicleRepository
         {
             throw new NotImplementedException();
         }
-        
+
 
         public void Delete(string regNum)
         {
@@ -60,19 +68,19 @@ namespace VehicleRepository
                 dataContext.Vehicles.DeleteOnSubmit(deleteVehicle);
                 dataContext.SubmitChanges();
             }
-                      
+
         }
 
         public void DeleteService(string regNum)
         {
             IEnumerable<Service> services = dataContext.Services.Where(i => i.RegistrationNumber == regNum).ToList();
-           
+
             dataContext.Services.DeleteAllOnSubmit(services);
             dataContext.SubmitChanges();
         }
 
         public void DeleteService(int id)
-        {           
+        {
             var deleteService = dataContext.Services.Where(i => i.Id == id).FirstOrDefault();
 
             dataContext.Services.DeleteOnSubmit(deleteService);
@@ -106,12 +114,12 @@ namespace VehicleRepository
         //fel
         public IService GetById(int ID)
         {
-           
+
             var service = dataContext.Services.Where(i => i.Id == ID).FirstOrDefault();
-            
-            if(service !=null)
+
+            if (service != null)
             {
-                IService domainService = ServiceFactory.CreateService(service.Id, service.RegistrationNumber, service.ServiceDate, service.Description,service.IsCompleted);
+                IService domainService = ServiceFactory.CreateService(service.Id, service.RegistrationNumber, service.ServiceDate, service.Description, service.IsCompleted);
                 return domainService;
             }
             return null;
@@ -138,11 +146,11 @@ namespace VehicleRepository
             throw new NotImplementedException();
         }
 
-     
+
         public IService Update(IService service)
         {
             var selectService = dataContext.Services.Where(i => i.Id == service.Id).FirstOrDefault();
-            if(selectService != null)
+            if (selectService != null)
             {
                 selectService.ServiceDate = service.ServiceDate;
                 selectService.Description = service.Description;
@@ -155,8 +163,8 @@ namespace VehicleRepository
 
         public IVehicle UpdateVehicle(IVehicle vehicle)
         {
-            var selectVehicle  = dataContext.Vehicles.Where(i => i.RegistrationNumber == vehicle.RegistrationNumber).FirstOrDefault();
-            if(selectVehicle != null)
+            var selectVehicle = dataContext.Vehicles.Where(i => i.RegistrationNumber == vehicle.RegistrationNumber).FirstOrDefault();
+            if (selectVehicle != null)
             {
                 var isServiceBokked = dataContext.Services.Where(i => i.RegistrationNumber == vehicle.RegistrationNumber).Any();
 
